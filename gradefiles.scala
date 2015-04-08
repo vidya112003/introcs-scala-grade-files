@@ -49,14 +49,22 @@ object gradefiles extends App {
 
   val exampleHeading = "Exams, Homework, Project"
   val exampleData = "10, a, 25, 35.6"
+  val exampleData2 = "10, a, 25, 35"
 
+  println(">> Heading")
   parseCSVHeader(exampleHeading) foreach println
+  println(">> CSV Row of Doubles")
   parseCSVRowOfDoubles(exampleData, -1.0) foreach println
+  println(">> CSV Row of Ints")
+  parseCSVRowOfInts(exampleData2, -1) foreach println
 
-  val results = readCategoryFile("comp150")
+  println(">> Reading the Category File")
+  val courseName = Try(args(0)) getOrElse("comp150")
+  println(s">> Reading $courseName categories file")
+  val results = readCategoryFile(courseName)
   results match {
     case (n, h, q, w) => {
-      println("There are $n columns of data")
+      println(s"There are $n columns of data")
       println("Headings")
       h foreach println
       println("Quantities")
